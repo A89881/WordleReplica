@@ -1,136 +1,68 @@
-import os
+import random
 import re
-import sys
-import time
-from termcolor import colored
+import requests
+
+print("Finding Word")
+
+word_link = requests.get(
+    "https://meaningpedia.com/5-letter-words?show=all")
+
+pattern = re.compile(r'<span itemprop="name">(\w+)</span>')
+word_list = pattern.findall(word_link.text)
 
 
-class main:
-    def __init__(self):
-        self.chosenWord = "horse"
-        self.board = [
-            "     ",
-            "     ",
-            "     ",
-            "     ",
-            "     ",
-        ]
-        self.activeRow = 0
-        pass
+item = random.choice(word_list)
+item = [str(i) for i in item]
+print(item)
 
-    def welcome(self):
-        print("Welcome to Wordle\n")
-        print("██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗")
-        print("██║    ██║██╔═══██╗██╔══██╗██╔══██╗██║     ██╔════╝")
-        print("██║ █╗ ██║██║   ██║██████╔╝██║  ██║██║     █████╗  ")
-        print("██║███╗██║██║   ██║██╔══██╗██║  ██║██║     ██╔══╝  ")
-        print("╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗")
-        print(" ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝")
-        print("\n")
+letters = ["abcdefghijklmnopqrstuvrst"]
+list1 = []
+ 
+main_loop = True
+counter = 1
 
-    def printRow(self, row):
-        sys.stdout.write("              ")  # to center the board
-        for i in range(len(row)):
-            if row != "":
-                if row[i] == self.chosenWord[i]:
-                    sys.stdout.write(
-                        f'| {self.correctPlace(row[i].upper())} ')
-                    pass
-                elif row[i] in self.chosenWord:
-                    sys.stdout.write(
-                        f'| {self.correctLetter(row[i].upper())} ')
-                    pass
-                else:
-                    sys.stdout.write(
-                        f'| {self.wrongLetter(row[i].upper())} ')
-                    pass
+while main_loop == True:
+    
+    word = str(input("Enter Guess?: ")).lower()
+    print("-----------------------------------------")
+    word = [str(i) for i in word ]
+    word_length = len(word)
 
-        sys.stdout.write("|\n\n")
-        pass
+    if "".join(map(str, word)) in word_list: 
+      if word_length == 5:
+        if counter < 6:
+          if item == word:
+            print("You Won") 
+            word = "".join(map(str, word))
+            print(f"the word is {word.capitalize()}")
+            print(f"It took you {counter} attempt(s)")
+            break
 
-    def printBoard(self):
-        for row in self.board:
-            self.printRow(row)
-            pass
+          if item != word:
 
-        sys.stdout.write("\n")
-        pass
+            for i in item:
+              for j in word:
+                  if i == j:
+                    list1.append(j)
+                    # list1 = list(set(list1))
 
-    def correctPlace(self, string):
-        return colored(string, "green")
+            if len(list1) == 0:
+              counter += 1
+              print(f"This is your {counter} attempt")
 
-    def correctLetter(self, string):
-        return colored(string, "yellow")
-
-    def wrongLetter(self, string):
-        return colored(string, "red")
-
-    def defineNewWord(self):
-        # do stuff with textHandler
-        # except old words so you dont get duplicates, thats no fun
-        pass
-
-    def checkInputWord(self):
-        def sliceWord(reasign, i):
-            slicedRow = []
-            for letter in self.board[self.activeRow]:
-                slicedRow.append(letter)
-
-            slicedRow[i] = reasign
-            self.board[self.activeRow] = "".join(slicedRow)
-
-        response = input("... ").lower()
-        response = re.sub(r'[^a-z]', "", response)
-
-        # first check if it's actually five letters or not
-        if len(response) != 5:
-            print("Only five letter words please.\n")
-            time.sleep(.8)
-            return
-        pass
-
-        # secondly for each letter in the guess we'll check if they match with the chosen word's letter
-        for i in range(len(response)):
-            if response[i] == self.chosenWord[i]:
-                sliceWord(self.chosenWord[i], i)
-                pass
-            elif response[i] in self.chosenWord:
-                sliceWord(response[i], i)
-                pass
-            else:
-                sliceWord(response[i], i)
-                pass
-            pass
-
-        # self.printRow(self.board[self.activeRow])
-
-        if response == self.chosenWord:
-            print("You guessed the word.")
-            raise SystemExit
-
-        if self.activeRow < len(self.board) - 1:
-            self.activeRow += 1
+            else:  
+              print(f"the letter(s) {list1} are in the word")
+              counter += 1
+              print(f"This is your {counter} attempt")
+            
         else:
-            print("game over")
-            raise SystemExit
-
-    def run(self):
-        # this loops
-
-        # clear terminal
-        def clear():
-            os.system("cls")
-            sys.stdout.write("\n")
-
-        clear()
-
-        self.welcome()
-        self.printBoard()
-        self.checkInputWord()
-
-        self.run()
+          print("You have the lost the game")
+          break
+      else:
+        print("Word entered is not 5 letters long")
+    else:
+      print("Word is not valid; word doesn't exist")
 
 
-mainClass = main()
 
-mainClass.run()
+
