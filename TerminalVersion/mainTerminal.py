@@ -3,10 +3,11 @@ import re
 import requests
 
 
-class WordGame:
+class Wordle:
+
     def __init__(self):
         self.word_list = []
-        self.item = None
+        self.secret_word = None
 
     def find_words(self):
         word_link = requests.get("https://meaningpedia.com/5-letter-words?show=all")
@@ -14,35 +15,37 @@ class WordGame:
         self.word_list = pattern.findall(word_link.text)
 
     def choose_word(self):
-        self.item = random.choice(self.word_list)
-        self.item = [str(i) for i in self.item]
-        print(self.item)
+        self.secret_word = random.choice(self.word_list)
+        self.secret_word = [str(i) for i in self.secret_word]
+        print(self.secret_word)
 
     def play_game(self):
         letters = ["abcdefghijklmnopqrstuvrst"]
         char_list = []
         main_loop = True
         counter = 1
+        max_attempts = 6
+        word_length = 5
 
         while main_loop:
-            word = str(input("Enter Guess?: ")).lower()
+            inputed_word = str(input("Enter Guess?: ")).lower()
             print("-----------------------------------------")
-            word = [str(i) for i in word]
-            word_length = len(word)
+            inputed_word = [str(i) for i in inputed_word]
+            inputed_word_length = len(inputed_word)
 
-            if "".join(map(str, word)) in self.word_list:
-                if word_length == 5:
-                    if counter < 6:
-                        if self.item == word:
+            if "".join(map(str, inputed_word)) in self.word_list:
+                if inputed_word_length == word_length:
+                    if counter < max_attempts:
+                        if self.secret_word == inputed_word:
                             print("You Won")
-                            word = "".join(map(str, word))
-                            print(f"the word is {word.capitalize()}")
+                            inputed_word = "".join(map(str, inputed_word))
+                            print(f"the inputed_word is {inputed_word.capitalize()}")
                             print(f"It took you {counter} attempt(s)")
                             break
 
-                        if self.item != word:
-                            for i in self.item:
-                                for j in word:
+                        if self.secret_word != inputed_word:
+                            for i in self.secret_word:
+                                for j in inputed_word:
                                     if i == j:
                                         char_list.append(j)
                           
@@ -60,7 +63,7 @@ class WordGame:
                                 print(f"This is your {counter} attempt")
 
                             else:
-                                print(f"the letter(s) {char_list} are in the word")
+                                print(f"the letter(s) {char_list} are in the inputed_word")
                                 counter += 1
                                 print(f"This is your {counter} attempt")
 
@@ -70,14 +73,14 @@ class WordGame:
                 else:
                     print("Word entered is not 5 letters long")
             else:
-                print("Word is not valid; word doesn't exist")
+                print("Word is not valid; inputed_word doesn't exist")
 
 
 def main():
-    word_game = WordGame()
-    word_game.find_words()
-    word_game.choose_word()
-    word_game.play_game()
+    wordle = Wordle()
+    wordle.find_words()
+    wordle.choose_word()
+    wordle.play_game()
 
 
 if __name__ == "__main__":
