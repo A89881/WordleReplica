@@ -1,10 +1,8 @@
 import random
 import re
 import requests
-
-BG_GREEN = "\u001b[42m"
-BG_YELLOW = "\u001b[43m" 
-RESET = "\u001b[0m"
+import sys
+from termcolor import colored
 
 class Wordle:
     def __init__(self):
@@ -29,6 +27,7 @@ class Wordle:
         counter = 1
 
         while main_loop:
+          if counter < self.max_attempts + 1:
             print(f"This is Attempt Number {counter}")
             inputed_word = str(input("Enter Guess?: ")).upper()
             
@@ -37,13 +36,15 @@ class Wordle:
             inputed_word_length = len(inputed_word)
 
             if inputed_word_length == self.word_length:
+                
                 if "".join(map(str, inputed_word)).lower() in self.word_list:
-                    if counter < self.max_attempts:
+                    
+               
 
                         if inputed_word == self.secret_word:
                             for i in range(0, inputed_word_length):
                                 if inputed_word[i] == self.secret_word[i]:   
-                                    print(f"{BG_GREEN}{inputed_word[i]}{RESET}", end="")
+                                    print(colored(inputed_word[i], "green"), end="")
 
                             print("      ")
                             print("You Won!")
@@ -68,23 +69,24 @@ class Wordle:
 
                             for i in range(0, inputed_word_length):
                                 if inputed_word[i] == self.secret_word[i]:   
-                                    print(f"{BG_GREEN}{inputed_word[i]}{RESET}", end="")
+                                    print(colored(inputed_word[i], "green"), end="")
                                 elif inputed_word[i] in self.secret_word:
-                                    print(f"{BG_YELLOW}{inputed_word[i]}{RESET}", end="")
+                                    print(colored(inputed_word[i], "yellow"), end="")
                                 else:
                                     print(inputed_word[i], end="")
                                 
-    
+                          
                             counter += 1
                             print("      ")   
-                    else:
-                        print("You have no more Attempts; You have lost the game")
-                        break
                 else:
                    print("Word is not valid; word doesn't exist")
                   
             else:
                 print(f"Word entered is not {self.word_length} letters long")
+
+          else:
+            print("You have no more Attempts; You have lost the game")
+            break
         
 
 
@@ -109,4 +111,3 @@ def main():
 
 if __name__ == "__main__":
     start()
-    # main()
