@@ -36,7 +36,7 @@ class Wordle:
 
         while main_loop:
             print("-----------------------------------------")
-            print(f"This is your Attempt Number {counter}")
+            print(f"This is Attempt Number {counter}")
             inputed_word = str(input("Enter Guess?: ")).upper()
             print("-----------------------------------------")
 
@@ -64,8 +64,8 @@ class Wordle:
                             continue_play = str(input("Enter P to Continue Playing, Enter S to access Scoreboard or Enter Any other Key to Exit Game: ").lower())
                             if continue_play == "p":
                                 main()
-                            elif continue_play == "s":
-                                pass
+                            if continue_play == "s":
+                                break
                             else:
                                 break
                             
