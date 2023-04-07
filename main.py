@@ -3,6 +3,7 @@ import re
 import requests
 import sys
 from termcolor import colored
+import time
 
 class Wordle:
     def __init__(self):
@@ -10,6 +11,9 @@ class Wordle:
         self.secret_word = None
         self.max_attempts = 6
         self.word_length = 5
+        self.username = None
+
+
 
 
     def find_words(self):
@@ -21,12 +25,17 @@ class Wordle:
         self.secret_word = random.choice(self.word_list).upper()
         self.secret_word = [str(i) for i in self.secret_word]
         print(self.secret_word)
+    
+    def user(self):
+        pass
+
 
     def play_game(self):
         main_loop = True
         counter = 1
 
         while main_loop:
+          start_time = time.time()
           if counter < self.max_attempts + 1:
             print(f"This is Attempt Number {counter}")
             inputed_word = str(input("Enter Guess?: ")).upper()
@@ -49,13 +58,17 @@ class Wordle:
                             print("      ")
                             print("You Won!")
                             inputed_word = "".join(map(str, inputed_word))
-                            print(f"the Word is {inputed_word}")
+
+                            print(f"The Word is {inputed_word}")
                             print(f"It took you {counter} attempt(s)")
+                            end_time = time.time()
+                            total_time = round(end_time - start_time)
+                            print(f"It took you in total {total_time} seconds")
 
 
                             
 
-                            continue_play = str(input("Enter P to Continue Playing, Enter S to access Scoreboard or Enter Any other Key to Exit Game: ").lower())
+                            continue_play = str(input("Enter 'P' to Continue Playing, Enter 'S' to access Scoreboard or Enter Any other Key to Exit Game: ").lower())
                             if continue_play == "p":
                                 main()
                             if continue_play == "s":
@@ -92,7 +105,7 @@ class Wordle:
 
 def start():
     print("Hello and Welcome to Wordle")
-    play = str(input("Enter P if you wish to Play, Enter S to access Scoreboard or Enter Any other Key to Exit game?: ")).lower()
+    play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter Any other Key to Exit game?: ")).lower()
 
     if play == "p":
         main()
