@@ -13,7 +13,6 @@ class Wordle:
         self.word_length = 5
 
         self.username = None
-
         self.board_list = []
 
 
@@ -27,15 +26,11 @@ class Wordle:
     def choose_word(self):
         self.secret_word = random.choice(self.word_list).upper()
         self.secret_word = [str(i) for i in self.secret_word]
-        print(self.secret_word)
     
     def user(self):
         pass
     
-    def board(self):
-        # for a in self.board_list:
-        #     self.board_list[a] = "".join(map(str, self.board_list[a]))
-           
+    def board(self):      
         for i in range(0, len(self.board_list)):
             self.board_list[i] = "".join(map(str, self.board_list[i]))
             print(self.board_list[i])
@@ -46,11 +41,14 @@ class Wordle:
         counter = 1
 
         while main_loop:
-          start_time = time.time()
+        #   start_time = time.time()
           if counter < self.max_attempts + 1:
+            
+            print(self.secret_word)
             print(f"This is Attempt Number {counter}")
             self.board()
             inputed_word = str(input("Enter Guess?: ")).upper()
+            os.system("cls")
             
 
             inputed_word = [str(i) for i in inputed_word]
@@ -64,15 +62,15 @@ class Wordle:
                                 if inputed_word[i] == self.secret_word[i]:
                                     inputed_word[i] = colored(inputed_word[i], "green")   
           
-                            os.system("cls")
+                            #os.system("cls")
                             print("You Won!")
                             inputed_word = "".join(map(str, inputed_word))
 
                             print(f"The Word is {inputed_word}")
                             print(f"It took you {counter} attempt(s)")
-                            end_time = time.time()
-                            total_time = float(end_time - start_time)
-                            print(f"It took you in total {total_time} seconds")
+                            # end_time = time.time()
+                            # total_time = float(end_time - start_time)
+                            # print(f"It took you in total {total_time} seconds")
 
 
                             
@@ -102,13 +100,13 @@ class Wordle:
                             self.board_list.append(inputed_word)
                             counter += 1
                             print(" ")
-                            os.system("cls")   
+                     
                 else:
-                   os.system("cls")   
+   
                    print("Word is not valid; word doesn't exist")
                   
             else:
-                os.system("cls")   
+        
                 print(f"Word entered is not {self.word_length} letters long")
 
           else:
