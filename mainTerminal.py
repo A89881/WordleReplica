@@ -2,12 +2,23 @@ import random
 import re
 import requests
 
+BG_GREEN = "\u001b[42m"
+BG_YELLOW = "\u001b[43m" 
+RESET = "\u001b[0m"
 
 class Wordle:
-
     def __init__(self):
         self.word_list = []
         self.secret_word = None
+        self.max_attempts = 6
+        self.word_length = 5
+        self.name = None
+    #     self.register = {}
+    
+
+    # def user(self):
+    #     self.name = str(input("Enter Username?: "))
+    #     pass
 
     def find_words(self):
         word_link = requests.get("https://meaningpedia.com/5-letter-words?show=all")
@@ -15,73 +26,98 @@ class Wordle:
         self.word_list = pattern.findall(word_link.text)
 
     def choose_word(self):
-        self.secret_word = random.choice(self.word_list)
+        self.secret_word = random.choice(self.word_list).upper()
         self.secret_word = [str(i) for i in self.secret_word]
         print(self.secret_word)
 
     def play_game(self):
-        letters = ["abcdefghijklmnopqrstuvrst"]
-        char_list = []
         main_loop = True
         counter = 1
-        max_attempts = 6
-        word_length = 5
 
         while main_loop:
-            inputed_word = str(input("Enter Guess?: ")).lower()
             print("-----------------------------------------")
+            print(f"This is your Attempt Number {counter}")
+            inputed_word = str(input("Enter Guess?: ")).upper()
+            print("-----------------------------------------")
+
             inputed_word = [str(i) for i in inputed_word]
             inputed_word_length = len(inputed_word)
 
-            if "".join(map(str, inputed_word)) in self.word_list:
-                if inputed_word_length == word_length:
-                    if counter < max_attempts:
-                        if self.secret_word == inputed_word:
-                            print("You Won")
+            if inputed_word_length == self.word_length:
+                if "".join(map(str, inputed_word)).lower() in self.word_list:
+                    if counter < self.max_attempts:
+
+                        if inputed_word == self.secret_word:
+                            for i in range(0, inputed_word_length):
+                                if inputed_word[i] == self.secret_word[i]:   
+                                    print(f"{BG_GREEN}{inputed_word[i]}{RESET}", end="")
+
+                            print("      ")
+                            print("You Won!")
                             inputed_word = "".join(map(str, inputed_word))
-                            print(f"the inputed_word is {inputed_word.capitalize()}")
+                            print(f"the Word is {inputed_word}")
                             print(f"It took you {counter} attempt(s)")
-                            break
 
-                        if self.secret_word != inputed_word:
-                            for i in self.secret_word:
-                                for j in inputed_word:
-                                    if i == j:
-                                        char_list.append(j)
-                          
 
-                            for i in range(len(char_list)):
-                                j = i + 1
-                                while j < len(char_list):
-                                    if char_list[i] == char_list[j]:
-                                        char_list.pop(j)
-                                    else:
-                                        j += 1
+                            
 
-                            if len(char_list) == 0:
-                                counter += 1
-                                print(f"This is your {counter} attempt")
-
+                            continue_play = str(input("Enter P to Continue Playing, Enter S to access Scoreboard or Enter Any other Key to Exit Game: ").lower())
+                            if continue_play == "p":
+                                main()
+                            elif continue_play == "s":
+                                pass
                             else:
-                                print(f"the letter(s) {char_list} are in the inputed_word")
-                                counter += 1
-                                print(f"This is your {counter} attempt")
+                                break
+                            
+                            
 
+                        if inputed_word != self.secret_word:
+
+                            for i in range(0, inputed_word_length):
+                                if inputed_word[i] == self.secret_word[i]:   
+                                    print(f"{BG_GREEN}{inputed_word[i]}{RESET}", end="")
+                                elif inputed_word[i] in self.secret_word:
+                                    print(f"{BG_YELLOW}{inputed_word[i]}{RESET}", end="")
+                                else:
+                                    print(inputed_word[i], end="")
+                                
+    
+                            counter += 1
+                            print("      ")   
                     else:
                         print("You have lost the game")
                         break
                 else:
-                    print("Word entered is not 5 letters long")
+                   print("-----------------------------------------")
+                   print("Word is not valid; word doesn't exist")
+                   print("-----------------------------------------")
             else:
-                print("Word is not valid; inputed_word doesn't exist")
+                print("-----------------------------------------")
+                print(f"Word entered is not {self.word_length} letters long")
+                print("-----------------------------------------")
+        
+
+
+def start():
+    print("Hello and Welcome to Wordle")
+    play = str(input("Enter P if you wish to Play, Enter S to access Scoreboard or Enter Any other Key to Exit game?: ")).lower()
+
+    if play == "p":
+        main()
+    elif play == "s":
+        pass
+    else:
+        pass 
 
 
 def main():
     wordle = Wordle()
+    # wordle.user()
     wordle.find_words()
     wordle.choose_word()
     wordle.play_game()
 
 
 if __name__ == "__main__":
-    main()
+    start()
+    # main()
