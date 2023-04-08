@@ -11,9 +11,8 @@ class Wordle:
         self.secret_word = None
         self.max_attempts = 6
         self.word_length = 5
-
-        self.username = None
         self.board_list = []
+        self.dict1 = {}
 
 
 
@@ -28,8 +27,15 @@ class Wordle:
         self.secret_word = [str(i) for i in self.secret_word]
     
     def user(self):
+        print("If you want to save ")
+        username = str(input("Enter Username?: "))
+
+        pass
+
+    def printScoreboard(self):
         pass
     
+
     def board(self):      
         for i in range(0, len(self.board_list)):
             self.board_list[i] = "".join(map(str, self.board_list[i]))
@@ -39,17 +45,15 @@ class Wordle:
     def play_game(self):
         main_loop = True
         counter = 1
+        #  start_time = time.time()
 
         while main_loop:
-        #   start_time = time.time()
           if counter < self.max_attempts + 1:
-            
             print(self.secret_word)
             print(f"This is Attempt Number {counter}")
             self.board()
             inputed_word = str(input("Enter Guess?: ")).upper()
             os.system("cls")
-            
 
             inputed_word = [str(i) for i in inputed_word]
             inputed_word_length = len(inputed_word)
@@ -62,70 +66,43 @@ class Wordle:
                                 if inputed_word[i] == self.secret_word[i]:
                                     inputed_word[i] = colored(inputed_word[i], "green")   
           
-                            #os.system("cls")
+                         
                             print("You Won!")
                             inputed_word = "".join(map(str, inputed_word))
-
+                            self.board_list.append(inputed_word)
+                            self.board()
                             print(f"The Word is {inputed_word}")
                             print(f"It took you {counter} attempt(s)")
                             # end_time = time.time()
-                            # total_time = float(end_time - start_time)
                             # print(f"It took you in total {total_time} seconds")
-
-
+                            continue_start()
+                            break
                             
-
-                            continue_play = str(input("Enter 'P' to Continue Playing, Enter 'S' to access Scoreboard or Enter Any other Key to Exit Game: ").lower())
-                            if continue_play == "p":
-                                main()
-                            if continue_play == "s":
-                                break
-                            else:
-                                break
-                            
-                            
-
+                
                         if inputed_word != self.secret_word:
                             for i in range(0, inputed_word_length):
                                 if inputed_word[i] == self.secret_word[i]: 
                                     inputed_word[i] = colored(inputed_word[i], "green")  
-                                    # print(colored(inputed_word[i], "green"), end="")
+                           
                                 elif inputed_word[i] in self.secret_word:
                                     inputed_word[i] = colored(inputed_word[i], "yellow")
-                                    # print(colored(inputed_word[i], "yellow"), end="")
+                                
                                 else:
                                     pass
                             
         
                             self.board_list.append(inputed_word)
-                            counter += 1
-                            print(" ")
-                     
+                            counter += 1                 
                 else:
-   
-                   print("Word is not valid; word doesn't exist")
-                  
+                   print("Word is not valid; word doesn't exist")          
             else:
-        
                 print(f"Word entered is not {self.word_length} letters long")
-
           else:
             print("You have no more Attempts; You have lost the game")
+            continue_start()
             break
+            
         
-
-
-def start():
-    print("Hello and Welcome to Wordle")
-    play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter Any other Key to Exit game?: ")).lower()
-
-    if play == "p":
-        main()
-    elif play == "s":
-        pass
-    else:
-        pass 
-
 
 def main():
     wordle = Wordle()
@@ -133,6 +110,44 @@ def main():
     wordle.choose_word()
     wordle.play_game()
 
+def start():
+    wordle = Wordle()
+    print("Hello and Welcome to Wordle")
+    play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
 
+    while True:
+        if play == "p":
+            main()
+            break
+        elif play == "s":
+            wordle.printScoreboard()
+            play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
+        elif play == "e":
+            break
+        else:
+            os.system("cls")
+            print("Invalid Answer")
+            play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
+
+def continue_start():
+    wordle = Wordle()
+    play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
+
+    while True:
+        if play == "p":
+            main()
+            break
+        elif play == "s":
+            wordle.printScoreboard()
+            play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
+        elif play == "e":
+            break
+        else:
+            os.system("cls")
+            print("Invalid Answer")
+            play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
+
+
+      
 if __name__ == "__main__":
     start()
