@@ -5,10 +5,6 @@ from termcolor import colored
 import time
 import os
 
-scoreboard_dict = {}
-name_list = []
-
-
 class Wordle:
     def __init__(self):
         self.word_list = []
@@ -16,6 +12,9 @@ class Wordle:
         self.max_attempts = 6
         self.word_length = 5
         self.board_list = []
+
+        self.scoreboard_dict = {}
+        self.name_list = []
 
 
     def find_words(self):
@@ -39,7 +38,7 @@ class Wordle:
                 if check == c:
                     break
                 else:
-                    name_list.append(username)
+                    self.name_list.append(username)
                     break
             else: 
                 print("Invalid Username; too long")
@@ -50,28 +49,14 @@ class Wordle:
             
 
 
-
-    def Scoreboard(self, record):
-        global scoreboard_dict
-        global name_list
-
-        if record != None:
-            username = name_list[-1]
-            if username in scoreboard_dict:
-                scoreboard_dict[username].append(record)
-            else:
-                scoreboard_dict[username] = [record]
-
-            os.system("cls")
-            print("The Scoreboard ranks the players based on the number of guesses required for them to win and the amount of time it took to win")
-            print("Name: Attempts: Time")
-            for key, value in scoreboard_dict.items():
-                print(key, value)
-        else:
-            for key, value in scoreboard_dict.items():
-                print(key, value)
-
-        
+    def Scoreboard(self):
+        self.scoreboard_dict = {item: None for item in self.name_list}
+        os.system("cls")
+        # print("The Scoreboard is made of the Top 100 Players, so if your name isn't there, sorry to say it to you but your trash")
+        print("The Scoreboared ranks the players based on Amount of Guesses required for them to win and the amount of time it took to win")
+        print(self.scoreboard_dict)
+        pass
+    
 
     def board(self):      
         for i in range(0, len(self.board_list)):
@@ -117,11 +102,14 @@ class Wordle:
                             
                             player_record.append(counter)
                             player_record.append(total_time)
-                         
+                            print(player_record)
+
                             self.user()
-                            self.Scoreboard(record=player_record)
 
+                            
 
+                            # self.scoreboard_dict.update({self.name: player_record})
+                            # self.scoreboard_dict[self.name] = player_record
                             continue_start()
                             break
                             
@@ -166,7 +154,7 @@ def start():
             main()
             break
         elif play == "s":
-            wordle.Scoreboard(record=None)
+            wordle.Scoreboard()
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
         elif play == "e":
             break
@@ -184,7 +172,7 @@ def continue_start():
             main()
             break
         elif play == "s":
-            wordle.Scoreboard(record=None)
+            wordle.Scoreboard()
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
         elif play == "e":
             break
