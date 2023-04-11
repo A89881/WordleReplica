@@ -72,3 +72,131 @@ my_list.append("berry")
 print(my_list)
 print(my_dict)
 
+"""
+Code that takes in the values and prints them properly
+"""
+
+  # def Scoreboard(self, record):
+    #     global scoreboard_dict
+    #     global name_list
+
+    #     if record != None:
+    #         username = name_list[-1]
+    #         if username in scoreboard_dict:
+    #             scoreboard_dict[username].append(record)
+    #         else:
+    #             scoreboard_dict[username] = [record]
+
+    #         os.system("cls")
+    #         print("The Scoreboard ranks the players based on the number of guesses required for them to win and the amount of time it took to win")
+    #         print("Name: Attempts: Time")
+    #         for key, value in scoreboard_dict.items():
+    #             print(key, value)
+    #     else:
+    #         for key, value in scoreboard_dict.items():
+    #             print(key, value)
+
+"""
+Similar Code that takes in values and prints them properly but sorts them also
+"""
+    # def Scoreboard(self, record):
+    #     if record != None:
+    #         global scoreboard_dict
+    #         global name_list
+    #         scoreboard_dict[name_list[-1]] = record
+    #         os.system("cls")
+    #         print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+    #         print("Name: Attempt(s): Time")
+    #         print(" ") 
+
+    #         # sort the scoreboard dictionary by attempts and then time
+    #         sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+    #         # print the sorted scoreboard
+    #         for i, (key, value) in enumerate(sorted_scores):
+    #             print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+
+    #     else:
+    #         os.system("cls")
+    #         print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+    #         print("Name: Attempts: Time") 
+    #         print(" ")
+
+    #         # sort the scoreboard dictionary by attempts and then time
+    #         sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+    #         # print the sorted scoreboard
+    #         for i, (key, value) in enumerate(sorted_scores):
+    #             print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+
+"""
+Code that takes in values, prints them properly sorts them but if duplicate name is found it removes the recent one: punishes you for entering in the same name
+"""
+# def Scoreboard(self, record):
+#         if record != None:
+#             global scoreboard_dict
+#             global name_list
+#             name = name_list[-1]
+#             if name in scoreboard_dict:
+#                 print(f"The name '{name}' already exists in the scoreboard. You cannot replace it.")
+#                 return
+#             scoreboard_dict[name] = record
+#             os.system("cls")
+#             print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+#             print("Name: Attempt(s): Time")
+#             print(" ") 
+
+#             # sort the scoreboard dictionary by attempts and then time
+#             sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+#             # print the sorted scoreboard
+#             for i, (key, value) in enumerate(sorted_scores):
+#                 print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+
+#         else:
+#             os.system("cls")
+#             print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+#             print("Name: Attempts: Time") 
+#             print(" ")
+
+#             # sort the scoreboard dictionary by attempts and then time
+#             sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+#             # print the sorted scoreboard
+#             for i, (key, value) in enumerate(sorted_scores):
+#                 print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+
+
+"""
+Code that returns that invalid input 
+"""
+
+ # def Scoreboard(self, record):
+    #     if record != None:
+    #         global scoreboard_dict
+    #         global name_list
+    #         scoreboard_dict[name_list[-1]] = record
+    #         os.system("cls")
+    #         print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+    #         print("Name: Attempt(s): Time")
+    #         print(" ") 
+
+    #         # sort the scoreboard dictionary by attempts and then time
+    #         sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+    #         # print the sorted scoreboard
+    #         for i, (key, value) in enumerate(sorted_scores):
+    #             print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+
+    #     else:
+    #         os.system("cls")
+    #         print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+    #         print("Name: Attempts: Time") 
+    #         print(" ")
+
+    #         # sort the scoreboard dictionary by attempts and then time
+    #         sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+    #         # print the sorted scoreboard
+    #         for i, (key, value) in enumerate(sorted_scores):
+    #             print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")

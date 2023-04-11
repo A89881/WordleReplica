@@ -27,6 +27,16 @@ class Wordle:
         self.secret_word = random.choice(self.word_list).upper()
         self.secret_word = [str(i) for i in self.secret_word]
     
+    def board(self):      
+        for i in range(0, len(self.board_list)):
+            self.board_list[i] = "".join(map(str, self.board_list[i]))
+            print(f"| {self.board_list[i]} |")
+
+             # word = [str(x) for x in self.board_list[i]]
+            # for i in range(0, len(word))
+            #     print(f"| {word[i]} ") 
+
+    
     def user(self):
         print(" ")
         print("If you want to save your score Enter Username Below, else Enter 'C' to continue (Be Warned Score Will not be Saved) ")
@@ -47,36 +57,54 @@ class Wordle:
                 username = str(input("Enter Username? (Max 5 Character): ")).lower()
                 check = [str(x) for x in username]
 
-            
-
-
-
+        
     def Scoreboard(self, record):
         global scoreboard_dict
         global name_list
 
-        if record != None:
-            username = name_list[-1]
-            if username in scoreboard_dict:
-                scoreboard_dict[username].append(record)
+        if (record != None and len(name_list) != 0) == True:
+            name = name_list[-1]
+            if name in scoreboard_dict:
+                while True:
+                    choice = input(f"Name already exists. Enter 'C' to continue without updating, or enter a new name: ")
+                    if choice.lower() == 'c':
+                        break
+                    elif choice not in name_list:
+                        name = choice
+                        name_list.append(name)
+                        break
+                    else:
+                        print("Name already exists. Please enter a different name.")
             else:
-                scoreboard_dict[username] = [record]
+                name_list.append(name)
 
+            scoreboard_dict[name] = record
             os.system("cls")
-            print("The Scoreboard ranks the players based on the number of guesses required for them to win and the amount of time it took to win")
-            print("Name: Attempts: Time")
-            for key, value in scoreboard_dict.items():
-                print(key, value)
-        else:
-            for key, value in scoreboard_dict.items():
-                print(key, value)
+            print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+            print("Name: Attempt(s): Time")
+            print(" ") 
 
+            # sort the scoreboard dictionary by attempts and then time
+            sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+            # print the sorted scoreboard
+            for i, (key, value) in enumerate(sorted_scores):
+                print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
         
 
-    def board(self):      
-        for i in range(0, len(self.board_list)):
-            self.board_list[i] = "".join(map(str, self.board_list[i]))
-            print(f"| {self.board_list[i]} |")
+        else:
+            os.system("cls")
+            print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+            print("Name: Attempts: Time") 
+            print(" ")
+
+            # sort the scoreboard dictionary by attempts and then time
+            sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+            # print the sorted scoreboard
+            for i, (key, value) in enumerate(sorted_scores):
+                print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+               
 
 
     def play_game(self):
@@ -172,7 +200,7 @@ def start():
             break
         else:
             os.system("cls")
-            print("Invalid Answer")
+            print("Invalid Input")
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
 
 def continue_start():
@@ -190,7 +218,7 @@ def continue_start():
             break
         else:
             os.system("cls")
-            print("Invalid Answer")
+            print("Invalid Input")
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
 
 
