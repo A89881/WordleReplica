@@ -64,13 +64,13 @@ Shit
 # my_dict["my_list"] = list1
 # print(my_dict)  # Output: {'my_list': ['1', '2']}
 
-my_list = ['apple', 'banana', 'orange']
-my_dict = {item: None for item in my_list}
-print(my_dict)
+# my_list = ['apple', 'banana', 'orange']
+# my_dict = {item: None for item in my_list}
+# print(my_dict)
 
-my_list.append("berry")
-print(my_list)
-print(my_dict)
+# my_list.append("berry")
+# print(my_list)
+# print(my_dict)
 
 """
 Code that takes in the values and prints them properly
@@ -200,3 +200,50 @@ Code that returns that invalid input
     #         # print the sorted scoreboard
     #         for i, (key, value) in enumerate(sorted_scores):
     #             print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+
+def my_function():
+    # some code here
+    return False
+
+if my_function() == False:
+    # do something here if the function returns False
+    print("works")
+
+if bool(my_function()) == False:
+    print("works too")
+
+my_function()
+
+"""
+Scoreboard Overide stuff
+"""
+
+  # if name_list[-1] != name and len(name_list) >= 0:
+            #     scoreboard_dict[name] = record
+            #     os.system("cls")
+            #     print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+            #     print("Name: Attempt(s): Time")
+            #     print(" ") 
+
+            #     # sort the scoreboard dictionary by attempts and then time
+            #     sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+            #     # print the sorted scoreboard
+            #     for i, (key, value) in enumerate(sorted_scores):
+            #         print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+            
+
+            # else:
+            #     scoreboard_dict[name] = record
+            #     os.system("cls")
+            #     print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
+            #     print("Name: Attempt(s): Time")
+            #     print(" ") 
+
+            #     # sort the scoreboard dictionary by attempts and then time
+            #     sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
+
+            #     # print the sorted scoreboard
+            #     for i, (key, value) in enumerate(sorted_scores):
+            #         print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+            
