@@ -32,10 +32,6 @@ class Wordle:
             self.board_list[i] = "".join(map(str, self.board_list[i]))
             print(f"| {self.board_list[i]} |")
 
-            # for j in range(0, len(self.board_list[i])):
-            #     print(f"| {self.board_list[i][j]}")
-
-        
     
     def sort_name_list(self, input):
         list1 = []
@@ -148,10 +144,6 @@ class Wordle:
         start_time = time.time()
         self.player_record = []
 
-        alphabet = ["abcdefghijklmnopqrstuvwyz"]
-        alphabet = [str(x) for x in alphabet]
-
-
         while main_loop:
           if counter < self.max_attempts + 1:
             # print(self.secret_word)
@@ -193,13 +185,10 @@ class Wordle:
 
                                 if inputed_word[i] == self.secret_word[i]: 
                                     inputed_word[i] = colored(inputed_word[i], "green")  
-                                    val = alphabet.index(inputed_word)
-                                    alphabet[val] = colored(alphabet[val], "green")
-
                                 elif inputed_word[i] in self.secret_word:
                                     inputed_word[i] = colored(inputed_word[i], "yellow")
                                 else:
-                                    pass
+                                    inputed_word[i] = colored(inputed_word[i], "grey")
                             
                             self.board_list.append(inputed_word)
                             counter += 1                 

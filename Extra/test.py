@@ -201,18 +201,18 @@ Code that returns that invalid input
     #         for i, (key, value) in enumerate(sorted_scores):
     #             print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
 
-def my_function():
-    # some code here
-    return False
+# def my_function():
+#     # some code here
+#     return False
 
-if my_function() == False:
-    # do something here if the function returns False
-    print("works")
+# if my_function() == False:
+#     # do something here if the function returns False
+#     print("works")
 
-if bool(my_function()) == False:
-    print("works too")
+# if bool(my_function()) == False:
+#     print("works too")
 
-my_function()
+# my_function()
 
 """
 Scoreboard Overide stuff
@@ -246,4 +246,17 @@ Scoreboard Overide stuff
             #     # print the sorted scoreboard
             #     for i, (key, value) in enumerate(sorted_scores):
             #         print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
-            
+
+import random
+
+list1 = [] 
+for a in range(1, 5):
+    for i in range(1, 14):
+        list1.append(i)
+
+
+print(list1)
+
+
+a = random.sample(list1, 2)
+
