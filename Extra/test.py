@@ -247,16 +247,19 @@ Scoreboard Overide stuff
             #     for i, (key, value) in enumerate(sorted_scores):
             #         print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
 
-import random
+# import random
 
-list1 = [] 
-for a in range(1, 5):
-    for i in range(1, 14):
-        list1.append(i)
-
-
-print(list1)
+# list1 = [] 
+# for a in range(1, 5):
+#     for i in range(1, 14):
+#         list1.append(i)
 
 
-a = random.sample(list1, 2)
+# print(list1)
+
+
+# a = random.sample(list1, 2)
+
+# alphabet = ["abcdefghijklmnopqrstuvwyz"]
+# alphabet = [str(x) for x in alphabet]
 

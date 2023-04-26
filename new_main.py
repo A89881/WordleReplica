@@ -148,13 +148,15 @@ class Wordle:
         start_time = time.time()
         self.player_record = []
 
-        alphabet = ["abcdefghijklmnopqrstuvwyz"]
-        alphabet = [str(x) for x in alphabet]
+        alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","y","z"]
+   
+        # alphabet = [str(x) for x in alphabet]
 
 
         while main_loop:
           if counter < self.max_attempts + 1:
-            # print(self.secret_word)
+            print(self.secret_word)
+            print(f"Letters: {alphabet}")
             print(f"This is Attempt Number {counter} out of {self.max_attempts}")
             self.board()
             inputed_word = str(input("Enter Guess?: ")).upper()
@@ -192,11 +194,15 @@ class Wordle:
                             for i in range(0, inputed_word_length):
 
                                 if inputed_word[i] == self.secret_word[i]: 
-                                    inputed_word[i] = colored(inputed_word[i], "green")  
-                                    val = alphabet.index(inputed_word)
+                                    val = alphabet.index(inputed_word[i].lower())
                                     alphabet[val] = colored(alphabet[val], "green")
+                                    
 
+                                    inputed_word[i] = colored(inputed_word[i], "green")  
                                 elif inputed_word[i] in self.secret_word:
+                                    val = alphabet.index(inputed_word[i].lower())
+                                    alphabet[val] = colored(alphabet[val], "yellow")
+
                                     inputed_word[i] = colored(inputed_word[i], "yellow")
                                 else:
                                     pass
