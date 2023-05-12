@@ -263,3 +263,52 @@ Scoreboard Overide stuff
 # alphabet = ["abcdefghijklmnopqrstuvwyz"]
 # alphabet = [str(x) for x in alphabet]
 
+# def has_space(string):
+#     if ' ' in string:
+#         return True
+#     else:
+#         return False
+
+# # Example usage:
+# # user_input = input("Enter a string: ")
+# while True:
+#   user_input = input("Enter a string: ")
+#   if has_space(user_input):
+#       print("String contains a space.")
+#   else:
+#       print("String does not contain a space.")
+
+
+# for a in range(0, inputed_word_length):
+#     letter = self.secret_word[a]
+#     if letters_check[letter]:
+#         letters_check[letter] += 1
+#     else:
+#         letters_check[letter] = 1
+
+# correct_letters = 0
+# correct_positions = []
+# for i in range(0, inputed_word_length):
+#     if inputed_word[i] == self.secret_word[i]:
+#         inputed_word[i] = colored(inputed_word[i], "green")
+#         correct_letters += 1
+#         correct_positions.append(i)
+#     elif inputed_word[i] in self.secret_word:
+#         inputed_word[i] = colored(inputed_word[i], "yellow")
+# for i in range(0, inputed_word_length):
+#     if i not in correct_positions:
+#         inputed_word[i] = colored(inputed_word[i], "grey")
+
+# self.board_list.append(inputed_word)
+# counter += 1
+
+
+list1 = [5, 20.13]
+list2 = [2, 40.13]
+
+if list1 < list2:
+    print("list1 is smaller than list2")
+elif list1 > list2:
+    print("list1 is greater than list2")
+else:
+    print("list1 and list2 are equal")

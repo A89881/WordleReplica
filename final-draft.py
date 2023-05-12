@@ -1,3 +1,4 @@
+from collections import defaultdict
 import random
 import re
 import requests
@@ -7,6 +8,7 @@ import os
 
 scoreboard_dict = {}
 name_list = []
+scoreboard_file = "scoreboard.txt"
 
 
 class Wordle:
@@ -17,7 +19,6 @@ class Wordle:
         self.word_length = 5
         self.board_list = []
 
-
     def find_words(self):
         word_link = requests.get("https://meaningpedia.com/5-letter-words?show=all")
         pattern = re.compile(r'<span itemprop="name">(\w+)</span>')
@@ -25,7 +26,9 @@ class Wordle:
 
     def choose_word(self):
         self.secret_word = random.choice(self.word_list).upper()
+        # self.secret_word = "APPLE" 
         self.secret_word = [str(i) for i in self.secret_word]
+   
     
     def board(self):      
         for i in range(0, len(self.board_list)):
@@ -38,18 +41,24 @@ class Wordle:
         [list1.append(x) for x in input if x not in list1]
         return list1
 
+    def has_space(self, string):
+        if ' ' in string:
+            return False
+        else:
+            return True
+
     
     def user(self):
         print(" ")
-        print("If you want to save your score Enter Username Below, else Enter 'C' to continue (Be Warned Score Will not be Saved) ")
-        username = str(input("Enter Username? (Max 5 Characters): "))
+        print("If you want to save your score Enter Username Below, or Enter 'C' to continue (Be Warned Score Will not be Saved)")
+        print("However if you have played before, you can reenter Your Username, then it will automatically update, however will only update if the new one is better then the previous one")
+        username = str(input("Enter Username?: "))
         check = [str(x).lower() for x in username]
         c = ["c"]
 
         while True:
-            if 0 < len(check) <= 5:
-                if check == c:
-          
+            if 0 < len(check) and self.has_space(string=check):
+                if check == c: 
                     continue_start()
                     break
                 else:
@@ -60,7 +69,7 @@ class Wordle:
                     break
             else: 
                 print("Invalid Username")
-                print("If you want to save your score Enter Username Below, else Enter 'C' to continue ")
+                print("If you want to save your score Enter Username Below, else Enter 'C' to continue (Be Warned Score Will not be Saved): ")
                 username = str(input("Enter Username? (Max 5 Character): ")).lower()
                 check = [str(x) for x in username]
 
@@ -68,6 +77,14 @@ class Wordle:
     def Scoreboard(self, record):
         global scoreboard_dict
         global name_list
+        if os.path.exists(scoreboard_file):
+            with open(scoreboard_file, "r") as file:
+                for line in file:
+                    parts = line.strip().split(",")
+                    name = parts[0]
+                    attempts = int(parts[1])
+                    time = float(parts[2])
+                    scoreboard_dict[name] = [attempts, time]
 
         name_list = self.sort_name_list(input=name_list)
 
@@ -75,16 +92,23 @@ class Wordle:
             name = name_list[-1]
             if name in scoreboard_dict:
                 while True:
-                    choice = input("Name already exists. Enter 'C' to continue without updating, or enter a new name: ")
+                    choice = input("Name already exists. Enter 'C' to continue (Be Warned Score Will not be Saved), or Enter 'Y' to Confirm Update or enter a new name: ")
                     if choice.lower() == 'c':
                         record = None 
                         break
-                    elif choice not in name_list:
+                    if choice.lower() == "y":
+                            value = scoreboard_dict[name]
+                            if value > record:
+                                scoreboard_dict[name] = record
+                                break
+                            else:
+                                print(f"Sorry, bud not better this time, last time {value}, this time {record}")
+                    elif choice not in name_list and self.has_space(string=choice):
                         name = choice
                         name_list.append(name)
                         break
                     else:
-                        print("Name already exists. Please enter a different name.")
+                        print("Invalid Name. Please enter a different name.")
             else:
                 name_list.append(name)
 
@@ -95,8 +119,6 @@ class Wordle:
                 print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
                 print("Name: Attempt(s): Time")
                 print(" ") 
-                
-
               
                 # sort the scoreboard dictionary by attempts and then time
                 sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
@@ -104,6 +126,10 @@ class Wordle:
                 # print the sorted scoreboard
                 for i, (key, value) in enumerate(sorted_scores):
                     print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
+                
+                with open(scoreboard_file, "w") as file:
+                    for key, value in scoreboard_dict.items():
+                        file.write(f"{key},{value[0]},{value[1]}\n")
 
             else:
                 os.system("cls")
@@ -114,13 +140,14 @@ class Wordle:
 
                 # sort the scoreboard dictionary by attempts and then time
                 sorted_scores = sorted(scoreboard_dict.items(), key=lambda x: (x[1][0], x[1][1]))
-
                 # print the sorted scoreboard
                 for i, (key, value) in enumerate(sorted_scores):
                     print(f"{i+1}. {key}: {value[0]} attempt(s), {value[1]} seconds")
-
-
-
+                
+                with open(scoreboard_file, "w") as file:
+                    for key, value in scoreboard_dict.items():
+                        file.write(f"{key},{value[0]},{value[1]}\n")
+                
         else:
             os.system("cls")
             print("The Scoreboard ranks the players based on amount of guesses required for them to win and the amount of time it took to win")
@@ -146,7 +173,7 @@ class Wordle:
 
         while main_loop:
           if counter < self.max_attempts + 1:
-            # print(self.secret_word)
+            print(self.secret_word)
             print(f"This is Attempt Number {counter} out of {self.max_attempts}")
             self.board()
             inputed_word = str(input("Enter Guess?: ")).upper()
@@ -180,18 +207,31 @@ class Wordle:
                             self.user()
                             break
                          
-                        if inputed_word != self.secret_word:
-                            for i in range(0, inputed_word_length):
-
-                                if inputed_word[i] == self.secret_word[i]: 
-                                    inputed_word[i] = colored(inputed_word[i], "green")  
-                                elif inputed_word[i] in self.secret_word:
-                                    inputed_word[i] = colored(inputed_word[i], "yellow")
+                        else:
+                            letters_check = {}                              
+                            for a in range(0, inputed_word_length):
+                                letter = self.secret_word[a]
+                                if letter in letters_check:
+                                    letters_check[letter] += 1
                                 else:
-                                    inputed_word[i] = colored(inputed_word[i], "grey")
-                            
+                                    letters_check[letter] = 1
+                  
+                            for i in range(0, inputed_word_length):
+                                letter = inputed_word[i]
+                                if inputed_word[i] == self.secret_word[i]:
+                                    inputed_word[i] = colored(inputed_word[i], "green")
+                                    letters_check[letter] -= 1
+                        
+                                else:
+                                    if inputed_word[i] != colored(inputed_word[i], "green"):             
+                                        if inputed_word[i] in self.secret_word and letters_check[letter] > 0:
+                                            inputed_word[i] = colored(inputed_word[i], "yellow")
+                                            letters_check[letter] -= 1
+                                        else:
+                                            inputed_word[i] = colored(inputed_word[i], "grey")                                         
                             self.board_list.append(inputed_word)
-                            counter += 1                 
+                            counter += 1
+
                 else:
                    print("Word is not valid; word doesn't exist")          
             else:
@@ -204,8 +244,6 @@ class Wordle:
             continue_start()
             break
             
-        
-
 def main():
     wordle = Wordle()
     wordle.find_words()
@@ -228,6 +266,7 @@ def start():
             wordle.Scoreboard(record=None)
             print(" ")
             print(f"The Premise of the Game is to Guess the Hidden Word. You have {wordle.max_attempts} to Guess and the words are {wordle.word_length} letters long")
+            print("When you play, the game you get feedback based on the accurcy of your guess, in which 'Green' = Right place and letter, 'Yellow' = Right letter, 'Grey' = Just Wrong ")
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
         elif play == "e":
             break
@@ -235,9 +274,11 @@ def start():
             os.system("cls")
             print("Invalid Input")
             print(f"The Premise of the Game is to Guess the Hidden Word. You have {wordle.max_attempts} to Guess and the words are {wordle.word_length} letters long")
+            print("When you play, the game you get feedback based on the accurcy of your guess, in which 'Green' = Right place and letter, 'Yellow' = Right letter, 'Grey' = Just Wrong ")
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
 
 def continue_start():
+    os.system("cls")
     wordle = Wordle()
     print(" ")
     print("When you play, the game you get feedback based on the accurcy of your guess, in which 'Green' = Right place and letter, 'Yellow' = Right letter, 'Grey' = Just Wrong ")
@@ -252,6 +293,7 @@ def continue_start():
             wordle.Scoreboard(record=None)
             print(" ")
             print(f"The Premise of the Game is to Guess the Hidden Word. You have {wordle.max_attempts} to Guess and the words are {wordle.word_length} letters long")
+            print("When you play, the game you get feedback based on the accurcy of your guess, in which 'Green' = Right place and letter, 'Yellow' = Right letter, 'Grey' = Just Wrong ")
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
         elif play == "e":
             break
@@ -259,9 +301,8 @@ def continue_start():
             os.system("cls")
             print("Invalid Input")
             print(f"The Premise of the Game is to Guess the Hidden Word. You have {wordle.max_attempts} to Guess and the words are {wordle.word_length} letters long")
+            print("When you play, the game you get feedback based on the accurcy of your guess, in which 'Green' = Right place and letter, 'Yellow' = Right letter, 'Grey' = Just Wrong ")
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
-
-
 
 if __name__ == "__main__":
     start()
