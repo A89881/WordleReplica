@@ -27,6 +27,7 @@ class Wordle:
     def choose_word(self):
         self.secret_word = random.choice(self.word_list).upper()
         # self.secret_word = "APPLE" 
+        # self.secret_word = "FOCAL"
         self.secret_word = [str(i) for i in self.secret_word]
    
     
@@ -46,6 +47,10 @@ class Wordle:
             return False
         else:
             return True
+    
+    
+    def remove_spaces(self, string):
+        return "".join(string.split())
 
     
     def user(self):
@@ -99,6 +104,7 @@ class Wordle:
                     if choice.lower() == "y":
                             value = scoreboard_dict[name]
                             if value > record:
+                                print("Your Score has been update")
                                 scoreboard_dict[name] = record
                                 break
                             else:
@@ -179,6 +185,7 @@ class Wordle:
             inputed_word = str(input("Enter Guess?: ")).upper()
             os.system("cls")
 
+            inputed_word = self.remove_spaces(string=inputed_word)
             inputed_word = [str(i) for i in inputed_word]
             inputed_word_length = len(inputed_word)
 
@@ -221,7 +228,6 @@ class Wordle:
                                 if inputed_word[i] == self.secret_word[i]:
                                     inputed_word[i] = colored(inputed_word[i], "green")
                                     letters_check[letter] -= 1
-                        
                                 else:
                                     if inputed_word[i] != colored(inputed_word[i], "green"):             
                                         if inputed_word[i] in self.secret_word and letters_check[letter] > 0:
@@ -278,7 +284,7 @@ def start():
             play = str(input("Enter 'P' if you wish to Play, Enter 'S' to access Scoreboard or Enter 'E' to Exit?: ")).lower()
 
 def continue_start():
-    os.system("cls")
+    # os.system("cls")
     wordle = Wordle()
     print(" ")
     print("When you play, the game you get feedback based on the accurcy of your guess, in which 'Green' = Right place and letter, 'Yellow' = Right letter, 'Grey' = Just Wrong ")

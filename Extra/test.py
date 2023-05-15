@@ -303,12 +303,21 @@ Scoreboard Overide stuff
 # counter += 1
 
 
-list1 = [5, 20.13]
-list2 = [2, 40.13]
+# list1 = [5, 20.13]
+# list2 = [2, 40.13]
 
-if list1 < list2:
-    print("list1 is smaller than list2")
-elif list1 > list2:
-    print("list1 is greater than list2")
-else:
-    print("list1 and list2 are equal")
+# if list1 < list2:
+#     print("list1 is smaller than list2")
+# elif list1 > list2:
+#     print("list1 is greater than list2")
+# else:
+#     print("list1 and list2 are equal")
+
+
+def remove_spaces(string):
+    return "".join(string.split())
+
+# Example usage
+input_string = "This is an example string"
+output_string = remove_spaces(input_string)
+print(output_string)
