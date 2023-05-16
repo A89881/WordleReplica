@@ -314,10 +314,86 @@ Scoreboard Overide stuff
 #     print("list1 and list2 are equal")
 
 
-def remove_spaces(string):
-    return "".join(string.split())
+# def remove_spaces(string):
+#     return "".join(string.split())
 
-# Example usage
-input_string = "This is an example string"
-output_string = remove_spaces(input_string)
-print(output_string)
+# # Example usage
+# input_string = "This is an example string"
+# output_string = remove_spaces(input_string)
+# print(output_string)
+
+ # letters_check = {}   
+                        
+  # for a in range(0, inputed_word_length):
+  #     letter = self.secret_word[a]
+  #     if letter in letters_check:
+  #         letters_check[letter] += 1
+  #     else:
+  #         letters_check[letter] = 1
+              
+  # print(letters_check)
+
+  # for i in range(0, inputed_word_length):
+  #     letter = inputed_word[i]
+  #     if inputed_word[i] == self.secret_word[i]:
+  #         inputed_word[i] = colored(inputed_word[i], "green")
+  #         # print(inputed_word[i])
+  #         letters_check[letter] -= 1
+  #         print(letters_check)                                   
+  #     else:
+  #         #Bokstaven du är på inte är grön
+  #         if inputed_word[i] != colored(inputed_word[i], "green"):   
+  #             #Om bokstaven man är på är i ordet och mängden av dessa bokstäver är mer än 0          
+  #             if inputed_word[i] in self.secret_word and letters_check[letter] != 0:
+  #                 #Om bokstaven som man är på är inte grön i ordet 
+  #                 if colored(inputed_word[i], "green") not in inputed_word:
+  #                     inputed_word[i] = colored(inputed_word[i], "yellow")
+
+  #                     letters_check[letter] -= 1
+  #                 else:
+  #                     inputed_word[i] = colored(inputed_word[i], "grey")
+  #             else:
+  #                 inputed_word[i] = colored(inputed_word[i], "grey")
+
+# my_list = [1, 2, 3, 4, 5]
+
+# for item in reversed(my_list):
+#     print(item)
+
+# import random
+
+# def get_random_word(file_path):
+#     with open(file_path, 'r') as file:
+#         contents = file.read()
+
+#         # Remove double quotes and split the contents into words
+#         words = [word.strip().strip('"') for word in contents.split(',')]
+
+
+#         random_word = random.choice(words)  # Select a random word
+#     return random_word
+
+# # Usage example
+# file_path = 'secret-word-file.txt'
+# random_word = get_random_word(file_path)
+# print("Random word:", random_word)
+
+# def check_word_in_file(word, file_path):
+#     with open(file_path, 'r') as file:
+#         for line in file:
+#             if word in line:
+#                 return True
+#     return False
+
+# # Usage example
+# file_path = 'guess-word-file.txt'
+# word_to_check = "green"
+# is_word_in_file = check_word_in_file(word_to_check, file_path)
+# print(f"The word '{word_to_check}' is {'in' if is_word_in_file else 'not in'} the file.")
+
+board = [[""]*5]*6
+
+for i in range(len(board)):
+    print(board[i])
+
+

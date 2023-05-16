@@ -1,7 +1,8 @@
+# Importing The Neccesary Dependencies And Libraries For The Project
+
+# Import for Dictionary Manipulation
 from collections import defaultdict
 import random
-import re
-import requests
 from termcolor import colored
 import time
 import os
@@ -9,7 +10,7 @@ import os
 scoreboard_dict = {}
 name_list = []
 scoreboard_file = "scoreboard.txt"
-
+secret_word_file = "word-file.txt"
 
 class Wordle:
     def __init__(self):
@@ -19,24 +20,28 @@ class Wordle:
         self.word_length = 5
         self.board_list = []
 
-    def find_words(self):
-        word_link = requests.get("https://meaningpedia.com/5-letter-words?show=all")
-        pattern = re.compile(r'<span itemprop="name">(\w+)</span>')
-        self.word_list = pattern.findall(word_link.text)
-
-    def choose_word(self):
-        self.secret_word = random.choice(self.word_list).upper()
-        # self.secret_word = "APPLE" 
-        # self.secret_word = "FOCAL"
-        self.secret_word = [str(i) for i in self.secret_word]
-   
+    def get_word(self):
+        with open(secret_word_file, 'r') as file:
+            contents = file.read()
+            # Remove double quotes and split the contents into words
+            words = [word.strip().strip('"') for word in contents.split(',')]
+            self.secret_word = random.choice(words).upper()
+            # self.secret_word = "APPLE" 
+            # self.secret_word = "FOCAL" 
+            self.secret_word = [str(i) for i in self.secret_word]
     
-    def board(self):      
+    def check_word(self, word):
+        with open(secret_word_file, "r") as file:
+            for line in file:
+                if word in line:
+                    return True
+        return False
+
+    def board(self):
         for i in range(0, len(self.board_list)):
             self.board_list[i] = "".join(map(str, self.board_list[i]))
             print(f"| {self.board_list[i]} |")
 
-    
     def sort_name_list(self, input):
         list1 = []
         [list1.append(x) for x in input if x not in list1]
@@ -47,7 +52,6 @@ class Wordle:
             return False
         else:
             return True
-    
     
     def remove_spaces(self, string):
         return "".join(string.split())
@@ -188,10 +192,9 @@ class Wordle:
             inputed_word = self.remove_spaces(string=inputed_word)
             inputed_word = [str(i) for i in inputed_word]
             inputed_word_length = len(inputed_word)
-
+      
             if inputed_word_length == self.word_length:
-                if "".join(map(str, inputed_word)).lower() in self.word_list:
-                
+                if self.check_word(word=f'"{"".join(map(str, inputed_word)).lower()}"'):
                         if inputed_word == self.secret_word:
                             for i in range(0, inputed_word_length):
                                 if inputed_word[i] == self.secret_word[i]:
@@ -215,7 +218,8 @@ class Wordle:
                             break
                          
                         else:
-                            letters_check = {}                              
+                            letters_check = {}   
+                                                       
                             for a in range(0, inputed_word_length):
                                 letter = self.secret_word[a]
                                 if letter in letters_check:
@@ -223,7 +227,7 @@ class Wordle:
                                 else:
                                     letters_check[letter] = 1
                   
-                            for i in range(0, inputed_word_length):
+                            for i in reversed(range(0, inputed_word_length)):
                                 letter = inputed_word[i]
                                 if inputed_word[i] == self.secret_word[i]:
                                     inputed_word[i] = colored(inputed_word[i], "green")
@@ -231,10 +235,11 @@ class Wordle:
                                 else:
                                     if inputed_word[i] != colored(inputed_word[i], "green"):             
                                         if inputed_word[i] in self.secret_word and letters_check[letter] > 0:
-                                            inputed_word[i] = colored(inputed_word[i], "yellow")
-                                            letters_check[letter] -= 1
+                                                inputed_word[i] = colored(inputed_word[i], "yellow")  
+                                                letters_check[letter] -= 1
                                         else:
-                                            inputed_word[i] = colored(inputed_word[i], "grey")                                         
+                                            inputed_word[i] = colored(inputed_word[i], "grey")
+                                                                     
                             self.board_list.append(inputed_word)
                             counter += 1
 
@@ -252,8 +257,7 @@ class Wordle:
             
 def main():
     wordle = Wordle()
-    wordle.find_words()
-    wordle.choose_word()
+    wordle.get_word()
     wordle.play_game()
 
 def start():
