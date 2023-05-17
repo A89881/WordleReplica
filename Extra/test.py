@@ -391,9 +391,64 @@ Scoreboard Overide stuff
 # is_word_in_file = check_word_in_file(word_to_check, file_path)
 # print(f"The word '{word_to_check}' is {'in' if is_word_in_file else 'not in'} the file.")
 
-board = [[""]*5]*6
+# board = [[""]*5]*6
 
-for i in range(len(board)):
-    print(board[i])
+# for i in range(len(board)):
+#     print(board[i])
+# abhay,1,2.657
 
 
+# def check_name_in_file(self, name):
+#     with open(scoreboard_file, 'r') as file:
+#         for line in file:
+#             line = line.strip()
+#             if line.startswith(name + ','):
+#                 return False
+#     return True
+
+# file_path = 'scoreboard.txt'  # Replace 'file.txt' with the actual file path
+# input_name = input("Enter a name to check: ")
+
+# if check_name_in_file(file_path, input_name):
+#     print("The name exists in the file.")
+# else:
+#     print("The name does not exist in the file.")
+
+# import re
+# from termcolor import colored
+
+# # Example colored string
+# colored_string = colored('Hello, World!', 'red')
+
+# print(colored_string)
+
+# # Remove color using regular expressions
+# uncolored_string = re.sub('\033\[\d+m', '', colored_string)
+
+# print(uncolored_string)  # Output: Hello, World!
+
+# print(letters_check)
+# print(inputed_word)
+# for i in range(0, inputed_word_length):
+#     letter = re.sub('\033\[\d+m', '', inputed_word[i])
+#     print(letter)
+#     print(inputed_word[i])
+#     if letter == self.secret_word[i]:
+#         inputed_word[i] = colored(inputed_word[i], "green")
+#         letters_check[letter] -= 1
+#     else:                      
+#         if inputed_word[i] != colored(letter, "green"):             
+#             if letter in self.secret_word and int(letters_check[letter]) > 0:
+#                     inputed_word[i] = colored(inputed_word[i], "yellow")  
+#                     letters_check[letter] -= 1
+#             else:
+#                 inputed_word[i] = colored(inputed_word[i], "grey")
+# print(letters_check)                 
+
+my_list = [10, 20, 30, 40, 50]
+
+# Find the index of an element
+element = 30
+index = my_list.index(element)
+
+print(index)  # Output: 2
