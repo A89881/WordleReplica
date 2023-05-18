@@ -301,6 +301,7 @@ class Wordle:
                                         inputed_word[value] = colored(inputed_word[value], "grey")
 
                             self.board_list.append(inputed_word)
+                            counter += 1
 
                 else:
                    word = "".join(map(str, inputed_word))
