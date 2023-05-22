@@ -286,7 +286,7 @@ class Wordle:
             # Check if the counter is within the max attempts limit
             if counter < self.max_attempts + 1:
                 # Print the secret word (for testing purposes)
-                print(self.secret_word)
+                # print(self.secret_word)
                 # Print the current attempt number out of total attempts
                 print(f"This is Attempt Number {counter} out of {self.max_attempts}")
                 # Display the game board
