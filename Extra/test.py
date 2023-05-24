@@ -445,10 +445,20 @@ Scoreboard Overide stuff
 #                 inputed_word[i] = colored(inputed_word[i], "grey")
 # print(letters_check)                 
 
-my_list = [10, 20, 30, 40, 50]
+# my_list = [10, 20, 30, 40, 50]
 
-# Find the index of an element
-element = 30
-index = my_list.index(element)
+# # Find the index of an element
+# element = 30
+# index = my_list.index(element)
 
-print(index)  # Output: 2
+# print(index)  # Output: 2
+
+list1 = [1, 30.11]
+list2 = [1, 40]
+
+if list1 > list2:
+    print("list1 is greater than list2.")
+elif list1 < list2:
+    print("list1 is smaller than list2.")
+else:
+    print("list1 is equal to list2.")

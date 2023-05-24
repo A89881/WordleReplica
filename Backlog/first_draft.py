@@ -62,7 +62,3 @@ while main_loop == True:
         print("Word entered is not 5 letters long")
     else:
       print("Word is not valid; word doesn't exist")
-
-
-
-
