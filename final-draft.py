@@ -138,8 +138,9 @@ class Wordle:
           self.username_info()
           # Prompt the user to enter a username
           username = str(input("Enter Username? (No Spaces): "))
-          # Checks if the user's input is not nothing or has a space (Reason is due, printing issues if it has spaces)
-          if 0 < len(username) and self.has_space(string=username) != True:
+          # Checks if the user's input is not nothing or has a space 
+          # (Reason is due, printing issues if it has spaces, that when one prints after, it does not show print)
+          if 0 < len(username) == True and self.has_space(string=username) != True:
               # If the user doesn't want to save their score
               if self.remove_spaces(username.lower()) == "c":
                   os.system("cls")
