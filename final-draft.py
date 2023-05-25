@@ -325,7 +325,8 @@ class Wordle:
                                 else:
                                     # Mark the letter in grey as it's not in the word or already used
                                     check[value] = colored(check[value], "grey")
-                               
+
+                        # Binds the Check list into one string which is the assigned to the       
                         inputed_word = "".join(map(str, check))
                         # Add the inputed word to the board list and increment the counter
                         self.board_list.append(inputed_word)
